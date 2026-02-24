@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Browser MCP Agent</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🌐 Browser MCP</h1>
+      <p class="subtitle">让 AI 控制你的浏览器</p>
+    </div>
+
+    <div id="status" class="status disconnected">
+      <div class="status-dot"></div>
+      <span id="status-text">未连接</span>
+    </div>
+
+    <div class="form-section">
+      <div class="form-group">
+        <label>服务器地址</label>
+        <input type="text" id="server-url" placeholder="http://192.168.25.70:32712">
+        <small>Agent Playground 后端地址</small>
+      </div>
+
+      <div class="form-group">
+        <label>用户 ID</label>
+        <input type="text" id="user-id" placeholder="your_user_id">
+        <small>唯一标识，用于关联浏览器连接</small>
+      </div>
+
+      <div class="form-group">
+        <label>VLM API Key <span class="optional">(可选)</span></label>
+        <input type="password" id="vlm-api-key" placeholder="sk-...">
+        <small>用于智能识别页面元素</small>
+      </div>
+
+      <div class="form-group">
+        <label>VLM 模型</label>
+        <input type="text" id="vlm-model" list="vlm-model-list" placeholder="gpt-4o">
+        <datalist id="vlm-model-list">
+          <option value="gpt-4o">
+          <option value="gpt-4.1">
+          <option value="gpt-4-vision-preview">
+          <option value="claude-3-opus-20240229">
+          <option value="claude-3-sonnet-20240229">
+          <option value="claude-sonnet-4-5-20250929">
+          <option value="qwen-vl-max">
+          <option value="qwen-vl-plus">
+        </datalist>
+        <small>支持自定义输入模型名称</small>
+      </div>
+
+      <div class="form-group">
+        <label>VLM API 地址</label>
+        <input type="text" id="vlm-base-url" placeholder="https://api.openai.com/v1">
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="connect-btn" class="primary">连接</button>
+      <button id="disconnect-btn" class="secondary" style="display:none">断开</button>
+    </div>
+
+    <div id="mcp-url-section" class="mcp-url-section" style="display:none">
+      <label>MCP SSE 地址</label>
+      <div class="url-copy">
+        <input type="text" id="mcp-url" readonly>
+        <button id="copy-btn" title="复制">📋</button>
+      </div>
+      <small>将此地址添加到 Agent Playground 的 MCP 服务列表</small>
+    </div>
+
+    <div id="panel-section" class="panel-section" style="display:none">
+      <button id="panel-btn" class="panel-btn">
+        <span id="panel-btn-icon">&#9654;</span>
+        <span id="panel-btn-text">打开控制窗口</span>
+      </button>
+      <small>AI 操作将在独立窗口中执行，不影响当前页面</small>
+    </div>
+
+    <div class="footer">
+      <a href="#" id="help-link">使用帮助</a>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
