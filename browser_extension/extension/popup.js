@@ -24,7 +24,7 @@ const helpLink = document.getElementById('help-link');
 
 // 默认配置
 const DEFAULT_CONFIG = {
-  serverUrl: 'http://localhost:8000',
+  serverUrl: 'http://localhost:8001',
   userId: '',
   vlmApiKey: '',
   vlmModel: 'gpt-4o',
@@ -45,7 +45,7 @@ async function loadConfig() {
   return new Promise((resolve) => {
     chrome.storage.local.get(['serverUrl', 'userId', 'vlmApiKey', 'vlmModel', 'vlmBaseUrl'], (result) => {
       const config = {
-        serverUrl: result.serverUrl || 'http://localhost:8000',
+        serverUrl: result.serverUrl || 'http://localhost:8001',
         userId: result.userId || '',
         vlmApiKey: result.vlmApiKey || '',
         vlmModel: result.vlmModel || 'gpt-4o',
@@ -94,7 +94,7 @@ function getFormConfig() {
  * 填充表单
  */
 function fillForm(config) {
-  serverUrlInput.value = config.serverUrl || 'http://localhost:8000';
+  serverUrlInput.value = config.serverUrl || 'http://localhost:8001';
   userIdInput.value = config.userId || '';
   vlmApiKeyInput.value = config.vlmApiKey || '';
   vlmModelSelect.value = config.vlmModel || 'gpt-4o';

@@ -716,9 +716,16 @@ async function actionType(params) {
     if (!isInput) return { success: false, error: 'Element ref=' + refId + ' is <' + el.tagName + '>, not an input. Pick a different ref.' };
 
     el.focus();
-    // React/Vue 兼容的值设置
-    var ns = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value');
-    if (ns && ns.set) { ns.set.call(el, txt); } else { el.value = txt; }
+    // React/Vue 兼容的值设置 - 支持 INPUT 和 TEXTAREA
+    var proto = el.tagName === 'TEXTAREA'
+      ? window.HTMLTextAreaElement.prototype
+      : window.HTMLInputElement.prototype;
+    var ns = Object.getOwnPropertyDescriptor(proto, 'value');
+    if (ns && ns.set) {
+      ns.set.call(el, txt);
+    } else {
+      el.value = txt;
+    }
     el.dispatchEvent(new Event('input', { bubbles: true }));
     el.dispatchEvent(new Event('change', { bubbles: true }));
 
