@@ -1,9 +1,14 @@
 # Agentic-Browser-MCP
 
-> **A High-Concurrency Browser MCP Server** - Enable AI agents to control real browsers through the MCP protocol, ideal for products requiring users to grant browser access permissions.
+**A High-Concurrency Browser MCP Server** — enable AI agents to control real browsers through the MCP protocol, ideal for products requiring users to grant browser access permissions.
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.8+-green.svg)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.8+-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![MCP](https://img.shields.io/badge/MCP-Server-blue.svg)](https://modelcontextprotocol.io/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg)](https://github.com/MinJung-Go/Agentic-Browser-MCP/issues)
+
+[Problem Statement](#problem-statement) • [Why](#why-agentic-browser) • [Quick Start](#quick-start) • [MCP Tools](#mcp-tools) • [Deployment](#deployment) • [Project Structure](#project-structure) • [API Endpoints](#api-endpoints) • [Contributing](#contributing)
+
+---
 
 ## Problem Statement
 
