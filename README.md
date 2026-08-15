@@ -34,12 +34,12 @@ Perfect for products requiring users to grant browser access:
 
 ### Key Features
 
-- 🌐 **Real Browser Control** - Access users' actual browser context (sessions, cookies, passwords)
-- 📋 **MCP Protocol Native** - Seamless integration with Claude Desktop, Cursor, and other MCP clients
-- 🔌 **Chrome Extension Architecture** - Secure, user-controlled permissions model
-- ⚡ **High Concurrency** - Redis-backed multi-worker deployment for thousands of concurrent users
-- 🔐 **Privacy First** - User grants explicit, revocable permission per session
-- 🚀 **Zero Config** - Built-in fakeredis for development, external Redis for production
+- **Real Browser Control** - Access users' actual browser context (sessions, cookies, passwords)
+- **MCP Protocol Native** - Seamless integration with Claude Desktop, Cursor, and other MCP clients
+- **Chrome Extension Architecture** - Secure, user-controlled permissions model
+- **High Concurrency** - Redis-backed multi-worker deployment for thousands of concurrent users
+- **Privacy First** - User grants explicit, revocable permission per session
+- **Zero Config** - Built-in fakeredis for development, external Redis for production
 
 ---
 
@@ -299,15 +299,15 @@ AI: "I can see this is Amazon's homepage. There's a search bar at ref=0.
 
 ---
 
-## License
+## Contributing
 
-MIT License - see [LICENSE](LICENSE) for details.
+Contributions are welcome! Please feel free to submit a [Pull Request](https://github.com/MinJung-Go/Agentic-Browser-MCP/pulls) or [Issue](https://github.com/MinJung-Go/Agentic-Browser-MCP/issues).
 
 ---
 
-## Contributing
+## License
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
@@ -317,3 +317,15 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [Claude Desktop](https://claude.ai/download) - AI assistant with MCP support
 - [FastAPI](https://fastapi.tiangolo.com/) - Modern Python web framework
 - [fakeredis](https://fakeredis.readthedocs.io/) - Redis emulator for development
+
+---
+
+<div align="center">
+
+**If this project helps you, please give it a Star!**
+
+Questions or suggestions? Open an [Issue](https://github.com/MinJung-Go/Agentic-Browser-MCP/issues)
+
+Made by [MinJung-Go](https://github.com/MinJung-Go)
+
+</div>
