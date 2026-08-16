@@ -157,8 +157,8 @@ This `vlmDescription` field helps AI agents better understand the page context b
 
 ```bash
 # Clone and install
-git clone https://github.com/yourusername/agentic-browser.git
-cd agentic-browser
+git clone https://github.com/MinJung-Go/Agentic-Browser-MCP.git
+cd Agentic-Browser-MCP
 pip install -r requirements.txt
 
 # Start server (uses built-in fakeredis)
