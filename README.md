@@ -213,7 +213,7 @@ Redis enables cross-worker communication, supporting thousands of concurrent use
 ## Project Structure
 
 ```
-agentic-browser/
+Agentic-Browser-MCP/
 ├── browser_extension/          # Chrome extension
 │   └── extension/
 │       ├── manifest.json
