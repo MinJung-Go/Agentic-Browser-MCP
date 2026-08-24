@@ -1,22 +1,22 @@
 # Agentic-Browser-MCP
 
-**A High-Concurrency Browser MCP Server** — enable AI agents to control real browsers through the MCP protocol, ideal for products requiring users to grant browser access permissions.
-
 [![Python](https://img.shields.io/badge/Python-3.8+-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![MCP](https://img.shields.io/badge/MCP-Server-blue.svg)](https://modelcontextprotocol.io/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg)](https://github.com/MinJung-Go/Agentic-Browser-MCP/issues)
 
-[Problem Statement](#problem-statement) • [Why](#why-agentic-browser) • [Quick Start](#quick-start) • [MCP Tools](#mcp-tools) • [Deployment](#deployment) • [Project Structure](#project-structure) • [API Endpoints](#api-endpoints) • [Contributing](#contributing)
+**An MCP server and Chrome extension that let AI clients operate a user-controlled browser window through WebSocket and SSE connections.**
+
+[Problem Statement](#problem-statement) • [Why](#why-agentic-browser) • [Quick Start](#quick-start) • [MCP Tools](#mcp-tools) • [Deployment](#deployment) • [Project Structure](#project-structure) • [API Endpoints](#api-endpoints) • [Security](#security-and-privacy) • [Contributing](#contributing)
 
 ---
 
 ## Problem Statement
 
-Building AI products that require browser automation often faces a fundamental challenge: **how to control users' browsers securely at scale?**
+Building AI products that require browser automation often faces a fundamental challenge: **how to connect an AI service to a user's existing browser while preserving user visibility and deployment controls?**
 
 Traditional solutions like Puppeteer or Playwright run in headless mode on your servers - isolated from users' real browsers with their sessions, cookies, and 2FA settings. For products that need to interact with users' actual browsing context, you need a different approach.
 
-**agentic-browser** solves this by providing a scalable MCP (Model Context Protocol) server that bridges AI agents to users' real browsers through a lightweight Chrome extension.
+**agentic-browser** provides an MCP (Model Context Protocol) bridge between AI clients and users' existing browsers through a Chrome extension. Production scalability and security depend on the surrounding authentication, TLS, Redis, and capacity configuration.
 
 ---
 
@@ -24,7 +24,7 @@ Traditional solutions like Puppeteer or Playwright run in headless mode on your 
 
 ### The Use Case
 
-Perfect for products requiring users to grant browser access:
+Designed for products that need users to grant browser access:
 
 - **AI Shopping Assistants** - Add items to user's cart on their favorite e-commerce sites
 - **Form Auto-fill Services** - Fill complex forms across multiple websites
@@ -34,12 +34,11 @@ Perfect for products requiring users to grant browser access:
 
 ### Key Features
 
-- **Real Browser Control** - Access users' actual browser context (sessions, cookies, passwords)
-- **MCP Protocol Native** - Seamless integration with Claude Desktop, Cursor, and other MCP clients
-- **Chrome Extension Architecture** - Secure, user-controlled permissions model
-- **High Concurrency** - Redis-backed multi-worker deployment for thousands of concurrent users
-- **Privacy First** - User grants explicit, revocable permission per session
-- **Zero Config** - Built-in fakeredis for development, external Redis for production
+- **Real Browser Control** - Operate tabs in a user's existing browser context, including authenticated sessions
+- **MCP Protocol Native** - MCP tools for compatible clients such as Claude Desktop and Cursor
+- **Chrome Extension Architecture** - A visible extension connection that the user can disconnect
+- **Multi-Worker Routing** - Redis-backed command and response queues for multi-worker deployments
+- **Local Development** - Built-in fakeredis for a single worker; external Redis is required for multi-worker deployments
 
 ---
 
@@ -50,12 +49,12 @@ Perfect for products requiring users to grant browser access:
 | **Browser Context** | User's real browser with sessions/cookies | Isolated headless browser |
 | **Deployment** | Server-side, users connect their browsers | Runs on your servers |
 | **Authentication** | Uses user's existing logins | Needs credential management |
-| **2FA Support** | Works seamlessly (user's device) | Complex to handle |
+| **2FA Support** | The user can complete challenges in their browser | Requires a separate interaction strategy |
 | **IP Geolocation** | User's actual IP/region | Your server's IP/region |
-| **Scalability** | User's browser does the work | Your servers do the work |
+| **Scalability** | Browser work runs on user devices; the bridge still requires capacity planning | Browser work runs on your infrastructure |
 | **Use Case** | Products needing user's browser context | Automated testing/scraping |
-| **Privacy** | User controls, data stays on device | Data on your servers |
-| **Cost** | Low (no server resources for browsing) | High (CPU/memory for browsers) |
+| **Data Flow** | Page data and optional screenshots can pass through configured bridge or VLM services | Browser data is processed by your automation stack |
+| **Cost** | Depends on bridge, Redis, and optional VLM usage | Depends on browser infrastructure and workload |
 
 **Bottom Line:** Use Playwright for testing and scraping. Use agentic-browser when you need **users' real browser context** with their permissions.
 
@@ -116,7 +115,7 @@ In the Chrome extension popup, fill in the **optional** VLM fields:
 - **VLM Model**: Model to use (e.g., `gpt-4o`, `claude-3-opus`, `gemini-pro-vision`)
 - **VLM API Base URL**: API endpoint (default: `https://api.openai.com/v1`)
 
-**Important:** VLM is completely optional. The extension works perfectly without it - page snapshots will just include the structured elements list without the additional visual description.
+**Important:** VLM is optional. Without it, page snapshots still include the structured elements list but omit the additional visual description.
 
 ### VLM in Page Snapshots
 
@@ -197,7 +196,7 @@ Server runs on `http://localhost:8000`
 python server.py
 ```
 
-Uses built-in fakeredis. Perfect for development and testing.
+Uses built-in fakeredis for local development and testing in a single process.
 
 ### Production (Multi-Worker)
 
@@ -206,7 +205,7 @@ Uses built-in fakeredis. Perfect for development and testing.
 REDIS_URL=redis://localhost:6379/0 gunicorn -w 4 -k uvicorn.workers.UvicornWorker server:app
 ```
 
-Redis enables cross-worker communication, supporting thousands of concurrent users.
+Redis enables cross-worker command and response routing. No repository benchmark currently establishes a specific concurrent-user capacity; validate throughput and latency in your own deployment environment.
 
 ---
 
@@ -281,13 +280,18 @@ AI: "I can see this is Amazon's homepage. There's a search bar at ref=0.
 
 ---
 
-## Security & Privacy
+## Security and Privacy
 
-- **User Consent**: Chrome extension requires explicit user permission to connect
-- **Revocable**: User can disconnect extension anytime
-- **No Credential Storage**: We never see or store user passwords
-- **Sandboxed Execution**: Each browser command executes in isolated context
-- **User in Control**: User sees all actions in real-time in their browser
+See [SECURITY.md](SECURITY.md) for the security model, deployment requirements, reportable issues, and private reporting process.
+
+> [!WARNING]
+> The current server endpoints do not provide built-in authentication or authorization. `user_id` and `session_id` are routing identifiers, not credentials. Do not expose the WebSocket, SSE, or message endpoints directly to an untrusted network; place them behind authenticated TLS termination and restrict Redis access.
+
+- **Extension permissions**: The extension requests tab, scripting, storage, display, and `<all_urls>` access so it can perform browser actions. Users can disconnect or disable the extension, but deployments should explain this permission scope before installation.
+- **Data transit**: Browser actions can send page structure and content through the configured bridge. When VLM mode is enabled, screenshots and the configured API key are sent to the selected VLM endpoint.
+- **Local storage**: VLM configuration is stored in `chrome.storage.local`; protect the browser profile and do not reuse high-privilege API keys.
+- **Redis**: Multi-worker deployments place connection metadata and command or response payloads in Redis. Queue and SSE keys use TTLs, while connection-hash cleanup depends on disconnect handling. Use authentication, TLS where available, network isolation, and operational cleanup for external Redis.
+- **User visibility**: Actions run in a dedicated browser window and remain visible to the user, but visibility is not a substitute for server-side authentication and authorization.
 
 ---
 
