@@ -303,18 +303,6 @@ See [SECURITY.md](SECURITY.md) for the security model, deployment requirements, 
 
 ---
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a [Pull Request](https://github.com/MinJung-Go/Agentic-Browser-MCP/pulls) or [Issue](https://github.com/MinJung-Go/Agentic-Browser-MCP/issues).
-
----
-
-## License
-
-MIT License - see [LICENSE](LICENSE) for details.
-
----
-
 ## Acknowledgments
 
 - [MCP Protocol](https://modelcontextprotocol.io/) - Model Context Protocol
@@ -324,12 +312,12 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-<div align="center">
+## Contributing
 
-**If this project helps you, please give it a Star!**
+Contributions are welcome! Please feel free to submit a [Pull Request](https://github.com/MinJung-Go/Agentic-Browser-MCP/pulls) or [Issue](https://github.com/MinJung-Go/Agentic-Browser-MCP/issues).
 
-Questions or suggestions? Open an [Issue](https://github.com/MinJung-Go/Agentic-Browser-MCP/issues)
+---
 
-Made by [MinJung-Go](https://github.com/MinJung-Go)
+## License
 
-</div>
+MIT License - see [LICENSE](LICENSE) for details.
