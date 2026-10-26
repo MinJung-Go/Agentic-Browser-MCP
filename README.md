@@ -64,32 +64,32 @@ Designed for products that need users to grant browser access:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                              User's Computer                               │
-│  ┌──────────────┐                    ┌──────────────────────────────────┐  │
-│  │ Chrome       │                    │ AI Application                  │  │
-│  │ Extension    │◄─── WebSocket ───► │ (Claude Desktop, Cursor, etc)  │  │
-│  └──────┬───────┘                    └──────────────┬───────────────┘  │
-│         │                                               │                  │
-│         │                                               │                  │
-│         v                                               v                  │
-│  ┌──────────────────────────────────────────────────────────────────┐   │
-│  │                     User's Real Browser                        │   │
-│  │  • Active sessions                                        │   │
-│  │  • Saved cookies                                           │   │
-│  │  • Auto-fill passwords                                     │   │
-│  │  • 2FA devices                                             │   │
-│  └──────────────────────────────────────────────────────────────────┘   │
+│                              User's Computer                                │
+│  ┌──────────────┐                    ┌──────────────────────────────────┐   │
+│  │ Chrome       │                    │ AI Application                   │   │
+│  │ Extension    │◄─── WebSocket ───► │ (Claude Desktop, Cursor, etc)    │   │
+│  └──────┬───────┘                    └──────────────┬───────────────────┘   │
+│         │                                           │                       │
+│         │                                           │                       │
+│         v                                           v                       │
+│  ┌──────────────────────────────────────────────────────────────────┐       │
+│  │                     User's Real Browser                          │       │
+│  │  • Active sessions                                               │       │
+│  │  • Saved cookies                                                 │       │
+│  │  • Auto-fill passwords                                           │       │
+│  │  • 2FA devices                                                   │       │
+│  └──────────────────────────────────────────────────────────────────┘       │
 └─────────────────────────────────────────────────────────────────────────────┘
 
                                     ▲
                                     │ MCP SSE
                                     │
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                         agentic-browser Server                           │
-│  • MCP SSE Protocol                                                 │
-│  • WebSocket Connection Manager                                      │
-│  • Redis-backed Multi-worker Support                                 │
-│  • API: /browser-mcp/sse/{user_id}                                    │
+│                         agentic-browser Server                              │
+│  • MCP SSE Protocol                                                         │
+│  • WebSocket Connection Manager                                             │
+│  • Redis-backed Multi-worker Support                                        │
+│  • API: /browser-mcp/sse/{user_id}                                          │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
